@@ -1,0 +1,50 @@
+.about-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  min-height: 700px;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 80px;
+}
+
+.about-content span {
+  color: #b5965c;
+  letter-spacing: 3px;
+}
+
+.about-content h2 {
+  font-size: 48px;
+  margin: 20px 0;
+}
+
+.about-content p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.about-content button {
+  width: 180px;
+  height: 55px;
+
+  background: #111;
+  color: white;
+
+  transition: 0.3s;
+}
+
+.about-content button:hover {
+  background: #b5965c;
+}

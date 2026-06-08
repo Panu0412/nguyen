@@ -1,0 +1,22 @@
+.product-section {
+  padding: 100px 80px;
+}
+
+.product-section h2 {
+  text-align: center;
+
+  margin-bottom: 50px;
+
+  font-size: 40px;
+
+  letter-spacing: 3px;
+}
+
+.product-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 30px;
+}
