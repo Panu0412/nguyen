@@ -4,13 +4,16 @@ import "./App.css";
 
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import SmoothScroll from "./components/SmoothScroll";
 
 function App() {
   return (
     <>
-      <ScrollToTop />
+  <SmoothScroll />
 
-      <Routes>
+  <ScrollToTop />
+
+  <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/product/:id"

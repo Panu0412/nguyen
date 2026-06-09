@@ -5,6 +5,7 @@ import CategorySection from "../components/CategorySection/CategorySection";
 import AboutSection from "../components/AboutSection/AboutSection";
 import PromoBanner from "../components/PromoBanner/PromoBanner";
 import Footer from "../components/Footer/Footer";
+import StoryProductSection from "../components/StoryProductSection/StoryProductSection";
 
 function Home() {
   return (
@@ -12,6 +13,7 @@ function Home() {
       <Header />
       <HeroSection />
       <ProductGrid />
+      <StoryProductSection />
       <CategorySection />
       <AboutSection />
       <PromoBanner />
