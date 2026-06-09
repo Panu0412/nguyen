@@ -30,17 +30,22 @@ function StoryProductSection() {
 
   return (
     <section className="story-section">
-      {/* HEADER */}
+      <div className="story-intro">
+        <span className="story-subtitle">
+          FEATURED SCENTS
+        </span>
 
-      <div className="story-header">
-        <div className="header-line"></div>
+        <h1>
+          Crafted Around Stories
+        </h1>
 
-        <span>BỘ SƯU TẬP</span>
+        <p>
+          Every fragrance tells a story,
+          capturing memories, places and emotions.
+        </p>
 
-        <div className="header-line"></div>
+        <div className="intro-line"></div>
       </div>
-
-      {/* BACKGROUND */}
 
       <div
         className={`background ${
@@ -54,8 +59,6 @@ function StoryProductSection() {
           backgroundImage: `url(${product.backgroundImage})`,
         }}
       />
-
-      {/* CONTENT */}
 
       <div className="story-overlay">
         <button
