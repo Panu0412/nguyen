@@ -4,58 +4,59 @@ import storyProducts from "../../data/storyProducts";
 
 function StoryProductSection() {
   const [current, setCurrent] = useState(0);
+  const [incoming, setIncoming] = useState(null);
   const [direction, setDirection] = useState("next");
   const [isAnimating, setIsAnimating] = useState(false);
 
   const changeSlide = (dir) => {
     if (isAnimating) return;
 
+    const nextIndex =
+      dir === "next"
+        ? (current + 1) % storyProducts.length
+        : (current - 1 + storyProducts.length) %
+          storyProducts.length;
+
     setDirection(dir);
+    setIncoming(nextIndex);
     setIsAnimating(true);
 
     setTimeout(() => {
-      setCurrent((prev) => {
-        if (dir === "next") {
-          return prev === storyProducts.length - 1 ? 0 : prev + 1;
-        }
-
-        return prev === 0 ? storyProducts.length - 1 : prev - 1;
-      });
-
+      setCurrent(nextIndex);
+      setIncoming(null);
       setIsAnimating(false);
-    }, 800);
+    }, 900);
   };
 
-  const product = storyProducts[current];
+  const currentProduct = storyProducts[current];
+  const incomingProduct =
+    incoming !== null
+      ? storyProducts[incoming]
+      : null;
 
   return (
     <section className="story-section">
-      {/* HEADER */}
-
       <div className="story-header">
         <div className="header-line"></div>
-
         <span>THE COLLECTION</span>
-
         <div className="header-line"></div>
       </div>
 
-      {/* BACKGROUND */}
-
       <div
-        className={`background ${
-          isAnimating
-            ? direction === "next"
-              ? "bg-exit-left"
-              : "bg-exit-right"
-            : ""
-        }`}
-        style={{
-          backgroundImage: `url(${product.backgroundImage})`,
-        }}
-      />
-
-      {/* CONTENT */}
+  key={`bg-${
+    incomingProduct
+      ? incomingProduct.id
+      : currentProduct.id
+  }`}
+  className="background background-reveal"
+  style={{
+    backgroundImage: `url(${
+      incomingProduct
+        ? incomingProduct.backgroundImage
+        : currentProduct.backgroundImage
+    })`,
+  }}
+/>
 
       <div className="story-overlay">
         <button
@@ -65,29 +66,64 @@ function StoryProductSection() {
           ←
         </button>
 
-        <div
-          className={`product-content ${
-            isAnimating
-              ? direction === "next"
-                ? "product-exit-left"
-                : "product-exit-right"
-              : ""
-          }`}
-        >
-          <img
-            src={product.productImage}
-            alt={product.name}
-          />
+        <div className="product-stage">
+          <div
+            className={`product-slide current-slide ${
+              isAnimating
+                ? direction === "next"
+                  ? "exit-left"
+                  : "exit-right"
+                : ""
+            }`}
+          >
+            <img
+              src={currentProduct.productImage}
+              alt={currentProduct.name}
+            />
 
-          <h2>{product.name}</h2>
+            <h2>{currentProduct.name}</h2>
 
-          <p>{product.description}</p>
+            <p>{currentProduct.description}</p>
 
-          <div className="slide-indicator">
-            {String(current + 1).padStart(2, "0")}
-            {" / "}
-            {String(storyProducts.length).padStart(2, "0")}
+            <div className="slide-indicator">
+              {String(current + 1).padStart(2, "0")}
+              {" / "}
+              {String(storyProducts.length).padStart(
+                2,
+                "0"
+              )}
+            </div>
           </div>
+
+          {incomingProduct && (
+            <div
+              className={`product-slide incoming-slide ${
+                direction === "next"
+                  ? "enter-right"
+                  : "enter-left"
+              }`}
+            >
+              <img
+                src={incomingProduct.productImage}
+                alt={incomingProduct.name}
+              />
+
+              <h2>{incomingProduct.name}</h2>
+
+              <p>{incomingProduct.description}</p>
+
+              <div className="slide-indicator">
+                {String(incoming + 1).padStart(
+                  2,
+                  "0"
+                )}
+                {" / "}
+                {String(
+                  storyProducts.length
+                ).padStart(2, "0")}
+              </div>
+            </div>
+          )}
         </div>
 
         <button

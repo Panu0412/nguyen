@@ -4,9 +4,7 @@
   overflow: hidden;
 }
 
-/* =========================
-BACKGROUND
-========================= */
+/* BACKGROUND */
 
 .background {
   position: absolute;
@@ -14,30 +12,37 @@ BACKGROUND
 
   background-size: cover;
   background-position: center;
-
-  transition:
-    transform 1.4s ease,
-    opacity 1.4s ease;
 }
 
-.bg-exit-left {
-  transform: translateX(-20%);
+.background-reveal {
+  animation: bgReveal 0.8s ease forwards;
 }
 
-.bg-exit-right {
-  transform: translateX(20%);
+@keyframes bgReveal {
+  0% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: scale(1.12);
+  }
+
+  30% {
+    opacity: 0.7;
+    filter: blur(10px);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
 }
 
-/* =========================
-HEADER
-========================= */
+/* HEADER */
 
 .story-header {
   position: absolute;
-
   top: 40px;
   left: 50%;
-
   transform: translateX(-50%);
 
   z-index: 10;
@@ -47,9 +52,7 @@ HEADER
   gap: 20px;
 
   color: white;
-
   letter-spacing: 4px;
-
   font-size: 14px;
 }
 
@@ -57,12 +60,10 @@ HEADER
   width: 80px;
   height: 1px;
 
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255,255,255,.7);
 }
 
-/* =========================
-OVERLAY
-========================= */
+/* OVERLAY */
 
 .story-overlay {
   position: relative;
@@ -72,34 +73,35 @@ OVERLAY
   height: 100%;
 
   display: flex;
-
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   gap: 80px;
 
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0,0,0,.25);
 }
 
-/* =========================
-PRODUCT
-========================= */
+/* PRODUCT */
 
-.product-content {
+.product-stage {
+  position: relative;
+
+  width: 520px;
+  height: 700px;
+
+  overflow: hidden;
+}
+
+.product-slide {
+  position: absolute;
+  inset: 0;
+
   text-align: center;
-
   color: white;
-
-  max-width: 500px;
-
-  transition:
-    transform 0.8s ease,
-    opacity 0.8s ease;
 }
 
-.product-content img {
+.product-slide img {
   width: 320px;
-
   height: 420px;
 
   object-fit: cover;
@@ -108,54 +110,97 @@ PRODUCT
 
   margin-bottom: 24px;
 
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 50px rgba(0,0,0,.35);
 }
 
-.product-content h2 {
+.product-slide h2 {
   font-size: 48px;
-
   font-weight: 600;
 
   margin-bottom: 16px;
 }
 
-.product-content p {
+.product-slide p {
   font-size: 18px;
-
   line-height: 1.8;
-
-  opacity: 0.9;
 }
 
-.product-exit-left {
-  transform: translateX(-300px);
+/* CURRENT */
 
-  opacity: 0;
+.exit-left {
+  animation: exitLeft .9s ease forwards;
 }
 
-.product-exit-right {
-  transform: translateX(300px);
-
-  opacity: 0;
+.exit-right {
+  animation: exitRight .9s ease forwards;
 }
 
-/* =========================
-INDICATOR
-========================= */
+/* INCOMING */
+
+.enter-right {
+  animation: enterRight .9s ease forwards;
+}
+
+.enter-left {
+  animation: enterLeft .9s ease forwards;
+}
+
+@keyframes exitLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes exitRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes enterRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes enterLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 .slide-indicator {
   margin-top: 24px;
 
   font-size: 14px;
-
   letter-spacing: 4px;
-
-  opacity: 0.8;
 }
 
-/* =========================
-BUTTON
-========================= */
+/* BUTTON */
 
 .nav-btn {
   width: 64px;
@@ -163,7 +208,7 @@ BUTTON
 
   border-radius: 50%;
 
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255,255,255,.8);
 
   background: transparent;
 
@@ -173,11 +218,11 @@ BUTTON
 
   cursor: pointer;
 
-  transition: 0.3s;
+  transition: .3s;
 }
 
 .nav-btn:hover {
   transform: scale(1.08);
 
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,.1);
 }
