@@ -1,5 +1,5 @@
 import "./FloatingGallerySection.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const images = [
   "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800",
@@ -18,37 +18,58 @@ const positions = [
   { x: -5, y: 20 },
   { x: 10, y: 55 },
   { x: 18, y: 15 },
-
   { x: 30, y: 80 },
-
   { x: 72, y: 15 },
-
   { x: 92, y: 30 },
-
   { x: 100, y: 60 },
-
   { x: 82, y: 82 },
-
   { x: 25, y: 90 },
-
   { x: 55, y: 92 },
 ];
 
-const rotations = [
-  -12,
-  7,
-  -5,
-  10,
-  -8,
-  5,
-  -14,
-  9,
-  -4,
-  12,
-];
+const rotations = [-12, 7, -5, 10, -8, 5, -14, 9, -4, 12];
 
 export default function FloatingGallerySection() {
-  const [hovered, setHovered] = useState(false);
+  const [visible, setVisible] = useState([]);
+  const timeouts = useRef([]);
+
+  const clearAllTimers = () => {
+    timeouts.current.forEach(clearTimeout);
+    timeouts.current = [];
+  };
+
+  const handleEnter = () => {
+    clearAllTimers();
+
+    for (let i = 0; i < images.length; i++) {
+      const timer = setTimeout(() => {
+        setVisible((prev) => {
+          if (prev.includes(i)) return prev;
+          return [...prev, i];
+        });
+      }, i * 250);
+
+      timeouts.current.push(timer);
+    }
+  };
+
+  const handleLeave = () => {
+    clearAllTimers();
+
+    const currentVisible = [...visible];
+
+    currentVisible.forEach((_, index) => {
+      const timer = setTimeout(() => {
+        setVisible((prev) => prev.slice(0, -1));
+      }, index * 180);
+
+      timeouts.current.push(timer);
+    });
+  };
+
+  useEffect(() => {
+    return () => clearAllTimers();
+  }, []);
 
   return (
     <section className="floating-section">
@@ -62,8 +83,8 @@ export default function FloatingGallerySection() {
 
       <div
         className="floating-center"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+        onMouseEnter={handleEnter}
+        onMouseLeave={handleLeave}
       >
         {images.map((img, index) => (
           <img
@@ -71,12 +92,13 @@ export default function FloatingGallerySection() {
             src={img}
             alt=""
             className={`floating-image ${
-              hovered ? "show" : "hide"
+              visible.includes(index)
+                ? "visible"
+                : "hidden-image"
             }`}
             style={{
               left: `${positions[index].x}%`,
               top: `${positions[index].y}%`,
-              "--delay": `${index * 250}ms`,
               "--rotate": `${rotations[index]}deg`,
             }}
           />
@@ -93,8 +115,7 @@ export default function FloatingGallerySection() {
         <p>
           A deep woody fragrance infused with leather,
           incense and dark amber. Crafted for those who
-          appreciate timeless luxury and artistic
-          perfumery.
+          appreciate timeless luxury and artistic perfumery.
         </p>
       </div>
     </section>
