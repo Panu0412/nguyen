@@ -12,22 +12,22 @@
 
   background-size: cover;
   background-position: center;
+
+  background-color: #000;
+
+  will-change: transform, opacity;
 }
 
 .background-reveal {
-  animation: bgReveal 0.8s ease forwards;
+  animation: bgReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
 }
 
 @keyframes bgReveal {
   0% {
-    opacity: 0;
-    filter: blur(18px);
-    transform: scale(1.12);
-  }
-
-  30% {
-    opacity: 0.7;
-    filter: blur(10px);
+    opacity: 0.8;
+    filter: blur(6px);
+    transform: scale(1.04);
   }
 
   100% {
@@ -43,6 +43,7 @@
   position: absolute;
   top: 40px;
   left: 50%;
+
   transform: translateX(-50%);
 
   z-index: 10;
@@ -60,7 +61,7 @@
   width: 80px;
   height: 1px;
 
-  background: rgba(255,255,255,.7);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 /* OVERLAY */
@@ -78,7 +79,7 @@
 
   gap: 80px;
 
-  background: rgba(0,0,0,.25);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 /* PRODUCT */
@@ -98,6 +99,8 @@
 
   text-align: center;
   color: white;
+
+  will-change: transform, opacity;
 }
 
 .product-slide img {
@@ -110,7 +113,7 @@
 
   margin-bottom: 24px;
 
-  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .product-slide h2 {
@@ -128,21 +131,25 @@
 /* CURRENT */
 
 .exit-left {
-  animation: exitLeft .9s ease forwards;
+  animation: exitLeft 1.2s
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .exit-right {
-  animation: exitRight .9s ease forwards;
+  animation: exitRight 1.2s
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* INCOMING */
 
 .enter-right {
-  animation: enterRight .9s ease forwards;
+  animation: enterRight 1.2s
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .enter-left {
-  animation: enterLeft .9s ease forwards;
+  animation: enterLeft 1.2s
+    cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes exitLeft {
@@ -208,7 +215,7 @@
 
   border-radius: 50%;
 
-  border: 1px solid rgba(255,255,255,.8);
+  border: 1px solid rgba(255, 255, 255, 0.8);
 
   background: transparent;
 
@@ -218,11 +225,11 @@
 
   cursor: pointer;
 
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .nav-btn:hover {
   transform: scale(1.08);
 
-  background: rgba(255,255,255,.1);
+  background: rgba(255, 255, 255, 0.1);
 }

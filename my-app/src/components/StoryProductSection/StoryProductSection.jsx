@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./StoryProductSection.css";
 import storyProducts from "../../data/storyProducts";
 
@@ -7,6 +7,16 @@ function StoryProductSection() {
   const [incoming, setIncoming] = useState(null);
   const [direction, setDirection] = useState("next");
   const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    storyProducts.forEach((product) => {
+      const bg = new Image();
+      bg.src = product.backgroundImage;
+
+      const img = new Image();
+      img.src = product.productImage;
+    });
+  }, []);
 
   const changeSlide = (dir) => {
     if (isAnimating) return;
@@ -25,10 +35,11 @@ function StoryProductSection() {
       setCurrent(nextIndex);
       setIncoming(null);
       setIsAnimating(false);
-    }, 900);
+    }, 1200);
   };
 
   const currentProduct = storyProducts[current];
+
   const incomingProduct =
     incoming !== null
       ? storyProducts[incoming]
@@ -43,20 +54,20 @@ function StoryProductSection() {
       </div>
 
       <div
-  key={`bg-${
-    incomingProduct
-      ? incomingProduct.id
-      : currentProduct.id
-  }`}
-  className="background background-reveal"
-  style={{
-    backgroundImage: `url(${
-      incomingProduct
-        ? incomingProduct.backgroundImage
-        : currentProduct.backgroundImage
-    })`,
-  }}
-/>
+        key={`bg-${
+          incomingProduct
+            ? incomingProduct.id
+            : currentProduct.id
+        }`}
+        className="background background-reveal"
+        style={{
+          backgroundImage: `url(${
+            incomingProduct
+              ? incomingProduct.backgroundImage
+              : currentProduct.backgroundImage
+          })`,
+        }}
+      />
 
       <div className="story-overlay">
         <button
@@ -86,12 +97,14 @@ function StoryProductSection() {
             <p>{currentProduct.description}</p>
 
             <div className="slide-indicator">
-              {String(current + 1).padStart(2, "0")}
-              {" / "}
-              {String(storyProducts.length).padStart(
+              {String(current + 1).padStart(
                 2,
                 "0"
               )}
+              {" / "}
+              {String(
+                storyProducts.length
+              ).padStart(2, "0")}
             </div>
           </div>
 
@@ -113,10 +126,9 @@ function StoryProductSection() {
               <p>{incomingProduct.description}</p>
 
               <div className="slide-indicator">
-                {String(incoming + 1).padStart(
-                  2,
-                  "0"
-                )}
+                {String(
+                  incoming + 1
+                ).padStart(2, "0")}
                 {" / "}
                 {String(
                   storyProducts.length
