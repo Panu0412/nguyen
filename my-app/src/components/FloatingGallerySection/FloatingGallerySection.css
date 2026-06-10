@@ -6,64 +6,70 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 8vw;
+  padding: 0 3vw;
 
   background: #f7f7f7;
+
   overflow: hidden;
 }
 
 .floating-left {
-  width: 20%;
+  width: 15%;
+
+  position: relative;
+  z-index: 100;
 }
 
 .floating-left h2 {
-  font-size: 3rem;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 0.9;
   font-weight: 400;
-  line-height: 1;
 }
 
 .floating-right {
-  width: 20%;
+  width: 15%;
+
+  position: relative;
+  z-index: 100;
 }
 
 .floating-right p {
-  color: #555;
-  line-height: 1.8;
   font-size: 15px;
+  line-height: 2;
+  color: #555;
 }
 
 .floating-center {
-  width: 60%;
-  height: 900px;
+  width: 70%;
+  height: 750px;
 
   position: relative;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  overflow: visible;
 }
 
 .main-product {
-  width: 420px;
+  width: 300px;
 
   position: relative;
-  z-index: 20;
+  z-index: 50;
 
-  transition: transform .4s ease;
+  transition: transform 0.8s ease;
 }
 
 .floating-center:hover .main-product {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .floating-image {
   position: absolute;
 
-  left: 50%;
-  top: 50%;
-
-  width: 220px;
-  height: 220px;
+  width: 260px;
+  height: 260px;
 
   object-fit: cover;
 
@@ -71,14 +77,13 @@
 
   opacity: 0;
 
-  z-index: 5;
+  z-index: 20;
 
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
 .floating-image.show {
-  animation: explodeIn
-    0.9s
+  animation: explodeIn 2.2s
     cubic-bezier(.22,1,.36,1)
     forwards;
 
@@ -86,68 +91,62 @@
 }
 
 .floating-image.hide {
-  animation: floatOut
-    0.9s
+  animation: floatOut 2s
     cubic-bezier(.22,1,.36,1)
     forwards;
 
-  animation-delay: calc(var(--delay) * .4);
+  animation-delay: calc(var(--delay) * .35);
 }
 
 @keyframes explodeIn {
-
   from {
     opacity: 0;
 
     transform:
       translate(-50%, -50%)
-      scale(.2);
+      scale(0.15)
+      rotate(0deg);
+  }
+
+  60% {
+    opacity: 1;
   }
 
   to {
     opacity: 1;
 
     transform:
-      translate(
-        calc(-50% + var(--x) + var(--mx)),
-        calc(-50% + var(--y) + var(--my))
-      )
-      scale(1);
+      translate(-50%, -50%)
+      scale(1)
+      rotate(var(--rotate));
   }
 }
 
 @keyframes floatOut {
-
   from {
     opacity: 1;
 
     transform:
-      translate(
-        calc(-50% + var(--x) + var(--mx)),
-        calc(-50% + var(--y) + var(--my))
-      )
-      scale(1);
+      translate(-50%, -50%)
+      scale(1)
+      rotate(var(--rotate));
   }
 
   50% {
-    opacity: .6;
+    opacity: .5;
 
     transform:
-      translate(
-        calc(-50% + var(--x) + var(--mx)),
-        calc(-50% + var(--y) + var(--my) - 15px)
-      )
-      scale(1.05);
+      translate(-50%, -65%)
+      scale(1.05)
+      rotate(var(--rotate));
   }
 
   to {
     opacity: 0;
 
     transform:
-      translate(
-        calc(-50% + var(--x) + var(--mx)),
-        calc(-50% + var(--y) + var(--my) - 50px)
-      )
-      scale(1.12);
+      translate(-50%, -90%)
+      scale(1.15)
+      rotate(var(--rotate));
   }
 }
