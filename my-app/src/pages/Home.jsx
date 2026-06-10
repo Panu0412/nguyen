@@ -6,6 +6,7 @@ import AboutSection from "../components/AboutSection/AboutSection";
 import PromoBanner from "../components/PromoBanner/PromoBanner";
 import Footer from "../components/Footer/Footer";
 import StoryProductSection from "../components/StoryProductSection/StoryProductSection";
+import FloatingGallerySection from "../components/FloatingGallerySection/FloatingGallerySection";
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
       <StoryProductSection />
       <CategorySection />
       <AboutSection />
+      <FloatingGallerySection />
       <PromoBanner />
       <Footer />
     </>
