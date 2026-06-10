@@ -15,60 +15,69 @@ const images = [
 ];
 
 const positions = [
-  { x: -5, y: 20 },
-  { x: 10, y: 55 },
-  { x: 18, y: 15 },
-  { x: 30, y: 80 },
-  { x: 72, y: 15 },
-  { x: 92, y: 30 },
-  { x: 100, y: 60 },
-  { x: 82, y: 82 },
-  { x: 25, y: 90 },
-  { x: 55, y: 92 },
+  { x: -15, y: 18 },
+  { x: -5, y: 72 },
+  { x: 12, y: 35 },
+  { x: 25, y: 82 },
+  { x: 40, y: 28 },
+  { x: 52, y: 68 },
+  { x: 65, y: 20 },
+  { x: 82, y: 78 },
+  { x: 102, y: 30 },
+  { x: 112, y: 72 },
 ];
 
 const rotations = [-12, 7, -5, 10, -8, 5, -14, 9, -4, 12];
 
 export default function FloatingGallerySection() {
-  const [visible, setVisible] = useState([]);
-  const timeouts = useRef([]);
+  const [states, setStates] = useState(
+    Array(images.length).fill("hidden")
+  );
 
-  const clearAllTimers = () => {
-    timeouts.current.forEach(clearTimeout);
-    timeouts.current = [];
+  const timers = useRef([]);
+
+  const clearTimers = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
   };
 
   const handleEnter = () => {
-    clearAllTimers();
+    clearTimers();
 
-    for (let i = 0; i < images.length; i++) {
+    images.forEach((_, i) => {
       const timer = setTimeout(() => {
-        setVisible((prev) => {
-          if (prev.includes(i)) return prev;
-          return [...prev, i];
+        setStates((prev) => {
+          const next = [...prev];
+          next[i] = "visible";
+          return next;
         });
-      }, i * 250);
+      }, i * 220);
 
-      timeouts.current.push(timer);
-    }
-  };
-
-  const handleLeave = () => {
-    clearAllTimers();
-
-    const currentVisible = [...visible];
-
-    currentVisible.forEach((_, index) => {
-      const timer = setTimeout(() => {
-        setVisible((prev) => prev.slice(0, -1));
-      }, index * 180);
-
-      timeouts.current.push(timer);
+      timers.current.push(timer);
     });
   };
 
+  const handleLeave = () => {
+    clearTimers();
+
+    [...images]
+      .map((_, i) => i)
+      .reverse()
+      .forEach((i, order) => {
+        const timer = setTimeout(() => {
+          setStates((prev) => {
+            const next = [...prev];
+            next[i] = "leaving";
+            return next;
+          });
+        }, order * 220);
+
+        timers.current.push(timer);
+      });
+  };
+
   useEffect(() => {
-    return () => clearAllTimers();
+    return () => clearTimers();
   }, []);
 
   return (
@@ -91,11 +100,7 @@ export default function FloatingGallerySection() {
             key={index}
             src={img}
             alt=""
-            className={`floating-image ${
-              visible.includes(index)
-                ? "visible"
-                : "hidden-image"
-            }`}
+            className={`floating-image ${states[index]}`}
             style={{
               left: `${positions[index].x}%`,
               top: `${positions[index].y}%`,
@@ -115,7 +120,8 @@ export default function FloatingGallerySection() {
         <p>
           A deep woody fragrance infused with leather,
           incense and dark amber. Crafted for those who
-          appreciate timeless luxury and artistic perfumery.
+          appreciate timeless luxury and artistic
+          perfumery.
         </p>
       </div>
     </section>
