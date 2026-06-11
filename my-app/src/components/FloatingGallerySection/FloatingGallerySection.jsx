@@ -67,7 +67,7 @@ export default function FloatingGallerySection() {
         const timer = setTimeout(() => {
           setStates((prev) => {
             const next = [...prev];
-            next[i] = "leaving";
+            next[i] = "hidden-image";
             return next;
           });
         }, order * 220);

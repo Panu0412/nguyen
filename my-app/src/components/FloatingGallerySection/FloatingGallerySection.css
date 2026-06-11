@@ -87,9 +87,7 @@
 }
 
 .hidden-image {
-  animation: imageOut 1.2s
-    ease-out
-    forwards;
+  animation: imageOut 1.1s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 @keyframes imageIn {
@@ -119,20 +117,22 @@
 @keyframes imageOut {
   from {
     opacity: 1;
-
     transform:
       translate(-50%, -50%)
       scale(1)
       rotate(var(--rotate));
   }
 
+  30% {
+    opacity: 0.9;
+  }
+
   to {
     opacity: 0;
-
     transform:
-      translate(-50%, -62%)
-      scale(1.04)
-      rotate(var(--rotate));
+      translate(-50%, -50%)
+      scale(0.2)
+      rotate(0deg);
   }
 }
 
